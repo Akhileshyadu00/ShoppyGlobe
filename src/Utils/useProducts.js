@@ -9,7 +9,7 @@ const useProducts = () => {
     fetch('https://dummyjson.com/products')
       .then(res => res.json())
       .then(data => {
-        setProducts(data);
+        setProducts(data.products);
         setLoading(false);
       })
       .catch(err => {
