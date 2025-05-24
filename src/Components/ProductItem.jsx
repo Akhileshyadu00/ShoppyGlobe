@@ -13,7 +13,7 @@ const ProductItem = ({ product }) => {
   return (
     <div className="border rounded-xl shadow-md p-4 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300">
       <img
-        src={product.images}
+        src={product.image}
         alt={product.title}
         loading="lazy"
         className="h-48 object-contain mx-auto mb-4"

@@ -25,10 +25,7 @@ function Header() {
     <header className="bg-white shadow p-4 flex items-center justify-between">
       <nav className="flex items-center gap-12">
         <Link to="/" className="text-lg font-bold text-blue-600">ShoppyGlobe</Link>
-        <Link to="/" className="text-lg text-blue-600 hover:font-bold hover:underline">Home</Link>
-        <Link to="/product" className="text-blue-500 hover:underline hover:font-bold">Products</Link>
-        <Link to="/about" className="text-blue-500 hover:underline hover:font-bold">About</Link>
-        <Link to="/contact" className="text-blue-500 hover:underline hover:font-bold">Contact Us</Link>
+        <Link to="/product" className="text-blue-500 hover:underline hover:font-bold">Products</Link>   
         <Link to="/cart" className="text-blue-500 hover:underline hover:font-bold">Cart</Link>
       </nav>
       <div className="flex items-center gap-3">
