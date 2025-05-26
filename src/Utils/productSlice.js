@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 export const fetchProduct = createAsyncThunk('products/fetchProduct', async() => {
-    const response = await axios.get('https://fakestoreapi.in/api/products?limit=150')
+    const response = await axios.get('https://api.escuelajs.co/api/v1/products')
     return response.data
 })
 
@@ -18,7 +18,7 @@ const ProductSlice = createSlice ({
             state.status='Loading'
         })
         .addCase(fetchProduct.fulfilled, (state, action) => {
-            state.status='Fulfilled',
+            state.status='Fulfilled'
             state.items= action.payload
         })
         .addCase(fetchProduct.rejected, (state) => {
