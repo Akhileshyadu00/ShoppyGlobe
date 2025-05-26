@@ -115,6 +115,7 @@ function Carousel() {
       </div>
 
       <Category />
+   
     </div>
   );
 }

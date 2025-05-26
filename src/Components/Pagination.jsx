@@ -11,8 +11,8 @@ function Pagination({ pageHandler, page, dynamicPage }) {
           key={pg}
           onClick={() => pageHandler(pg)}
           className={`px-3 py-1 rounded ${
-            pg === page ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'
-          } hover:bg-blue-500 hover:text-white transition`}
+            pg === page ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-800'
+          } hover:bg-teal-400 hover:text-white transition`}
         >
           {pg}
         </button>

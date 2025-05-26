@@ -30,7 +30,7 @@ function Footer() {
             <a href="https://www.facebook.com/login/" className="hover:text-red-400 transition"><Facebook /></a>
             <a href="https://www.instagram.com/accounts/login/" className="hover:text-red-400 transition"><Instagram /></a>
             <a href="https://x.com/i/flow/login" className="hover:text-red-400 transition"><Twitter /></a>
-            <a href="mailto:info@shoppyglobe.com" className="hover:text-red-400 transition"><Mail /></a>
+            <a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&dsh=S1862569502%3A1748258659681137&emr=1&flowEntry=ServiceLogin&flowName=GlifWebSignIn&followup=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&ifkv=ASKV5Mgu7fd10iuSExuCBahKIHgC37eyHOsUyJfxr-h1kcd3lH20uwoOULBvf51QFTi7hzeKK0LSrQ&osid=1&service=mail" className="hover:text-red-400 transition"><Mail /></a>
           </div>
         </div>
       </div>

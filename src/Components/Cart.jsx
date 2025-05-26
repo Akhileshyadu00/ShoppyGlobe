@@ -1,4 +1,3 @@
-// src/Components/Cart.jsx
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -41,7 +40,7 @@ function Cart() {
         <div className="text-center mt-20">
           <h2 className="text-xl text-gray-500 mb-4">Your cart is empty.</h2>
           <button
-            className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition"
+            className="bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition"
             onClick={() => navigate("/")}
           >
             Back to Shopping
@@ -81,7 +80,7 @@ function Cart() {
                           onChange={e => handleUpdate(item.id, Number(e.target.value))}
                         />
                         <button
-                          className="text-blue-600 hover:underline font-medium"
+                          className="text-teal-600 hover:underline font-medium"
                           onClick={() => handleApplyOne(item.id)}
                         >
                           Update
@@ -103,7 +102,7 @@ function Cart() {
           {hasUnsaved && (
             <div className="text-right mt-4">
               <button
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+                className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-800 transition"
                 onClick={applyAll}
               >
                 Apply All Quantity Changes
@@ -117,7 +116,7 @@ function Cart() {
 
           <div className="text-center mt-8">
             <button
-              className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition"
+              className="bg-teal-500 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition"
               onClick={() => navigate("/")}
             >
               Back to Shopping
