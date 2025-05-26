@@ -6,6 +6,8 @@ import Cart from './Components/Cart';
 import NotFound from './Components/NotFound';
 
 import ProductDetails from './Components/ProductDetails'; // <-- fixed import
+import Home from './Components/Home';
+import Footer from './Components/Footer';
 
 function App() {
   return (
@@ -14,13 +16,14 @@ function App() {
         <Header />
         <main className="p-4">
           <Routes>
-            <Route path='/' element={<ProductList />} /> 
+            <Route path='/' element={<Home />} /> 
             <Route path="/product" element={<ProductList />} /> 
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} /> 
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
+        <Footer />
       </div>
     </Router>
   );

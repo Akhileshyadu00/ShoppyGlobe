@@ -1,86 +1,82 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { addToCart } from '../Utils/cartSlice';
-import { Loader2, AlertTriangle } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { IoCartOutline } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../Utils/cartSlice"; // ✅ Correct import
 
 function ProductDetails() {
-  const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [error, setError] = useState('');
-  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+  const [quantity, setQuantity] = useState(1);
+
+  const dispatch = useDispatch(); // ✅ Correct usage
+  const { id } = useParams();
+
+  const fetchSingleProduct = async () => {
+    try {
+      const res = await axios.get(`https://api.escuelajs.co/api/v1/products/${id}`);
+      setProduct(res.data); // ✅ Fixed response
+    } catch (error) {
+      console.error("Error fetching product:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const controller = new AbortController();
-    const fetchProduct = async () => {
-      try {
-        setError('');
-        setProduct(null);
-        const res = await fetch(`https://fakestoreapi.in/api/products/${id}`, {
-          signal: controller.signal,
-        });
-        if (!res.ok) throw new Error('Failed to fetch');
-        const data = await res.json();
-        setProduct(data);
-      } catch (err) {
-        if (err.name !== 'AbortError') {
-          console.error(err);
-          setError('Failed to fetch product details.');
-        }
-      }
-    };
-
-    fetchProduct();
-    return () => controller.abort();
+    fetchSingleProduct();
   }, [id]);
 
-  if (error) {
-    return (
-      <div className="text-red-500 text-center flex flex-col items-center justify-center gap-2" aria-live="polite">
-        <p className="flex items-center gap-2">
-          <AlertTriangle /> {error}
-        </p>
-        <button
-          onClick={() => window.location.reload()}
-          className="mt-3 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
-        >
-          Retry
-        </button>
-      </div>
-    );
+  if (loading) {
+    return <div className="text-center py-10 text-xl">Loading...</div>;
   }
 
   if (!product) {
     return (
-      <p className="text-gray-600 text-center flex items-center justify-center gap-2" aria-live="polite">
-        <Loader2 className="animate-spin" /> Loading product...
-      </p>
+      <div className="text-center py-10 text-red-500 text-xl">
+        Product not found
+      </div>
     );
   }
 
   return (
-    <div className="p-6 max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-      <img
-        src={product.image || product.thumbnail}
-        alt={product.title}
-        className="w-full h-80 rounded shadow-lg object-cover bg-gray-100"
-        loading="lazy"
-        onError={(e) => {
-          e.currentTarget.onerror = null;
-          e.currentTarget.src = product.thumbnail || 'https://via.placeholder.com/300';
-        }}
-      />
+    <div className="max-w-5xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
+      {/* Product Image */}
+      <div className="flex justify-center items-center bg-gray-100 p-6 rounded-lg w-full md:w-1/2">
+        <img
+          src={product.images?.[0]}
+          alt={product.title}
+          loading="lazy"
+          className="h-64 object-contain"
+        />
+      </div>
 
-      <div>
-        <h2 className="text-2xl font-bold mb-2">{product.title}</h2>
+      {/* Product Details */}
+      <div className="w-full md:w-1/2">
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">{product.title}</h1>
         <p className="text-gray-600 mb-4">{product.description}</p>
-        <p className="text-lg font-semibold mb-4">
-          Price: <span className="text-green-600">${product.price}</span>
-        </p>
+        <p className="text-xl font-semibold text-gray-600 mb-6">Rs. {product.price}</p>
+
+        <div className="flex items-center gap-4 mb-4">
+          <label htmlFor="quantity" className="text-sm font-medium text-gray-700">
+            Quantity:
+          </label>
+          <input
+            id="quantity"
+            type="number"
+            min={1}
+            value={quantity}
+            onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
+            className="border border-gray-300 rounded-2xl px-4 py-1 w-20 focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+        </div>
+
         <button
-          onClick={() => dispatch(addToCart(product))}
-          className="bg-blue-400 hover:bg-blue-700 text-white px-4 py-2 rounded transition"
+          onClick={() => dispatch(addToCart({ product, quantity }))} // ✅ Proper dispatch
+          className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white mt-2 px-6 py-2 rounded shadow transition"
         >
+          <IoCartOutline className="text-xl" />
           Add to Cart
         </button>
       </div>

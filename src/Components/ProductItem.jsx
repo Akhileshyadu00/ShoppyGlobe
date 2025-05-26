@@ -1,43 +1,60 @@
-import { useDispatch } from 'react-redux';
-import { addToCart } from '../Utils/cartSlice';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { IoCartOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '../Utils/productSlice';
 
-const ProductItem = ({ product }) => {
-  const dispatch = useDispatch();
+function ProductItem({ product }) {
+  const navigate = useNavigate();
+  const { addToCart, cartItems } = useCart();  // corrected plural
+  const inCartCount = cartItems.find(item => item.id === product.id)?.quantity || 0;
 
-  const formattedPrice = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(product.price);
+  const handleNavigate = () => {
+    navigate(`/products/${product.id}`);
+  };
+
+  const handleAdd = (e) => {
+    e.stopPropagation();        // prevent card’s onClick
+    addToCart(product);
+  };
 
   return (
-    <div className="border rounded-xl shadow-md p-4 flex flex-col justify-between hover:shadow-lg transition-shadow duration-300">
-      <img
-        src={product.image}
-        alt={product.title}
-        loading="lazy"
-        className="h-48 object-contain mx-auto mb-4"
-      />
-      <h3 className="text-lg font-semibold mb-2 line-clamp-2">{product.title}</h3>
-      <p className="text-green-600 font-bold mb-2">{formattedPrice}</p>
+    <div
+      onClick={handleNavigate}
+      className="flex flex-col border border-gray-300 rounded-2xl overflow-hidden shadow hover:shadow-2xl transition duration-300 cursor-pointer p-4 bg-white h-full"
+    >
+      {/* Image */}
+      <div className="flex items-center justify-center bg-gray-100 rounded-lg p-4 aspect-square hover:scale-105 transition-transform duration-300">
+        <img
+          src={product.image}
+          alt={product.title}
+          loading="lazy"
+          className="h-32 sm:h-40 object-contain transition-transform duration-300 hover:scale-105"
+        />
+      </div>
 
-      <div className="flex justify-between items-center mt-auto">
-        <Link
-          to={`/product/${product.id}`}
-          className="text-blue-600 hover:underline text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
-        >
-          View Details
-        </Link>
+      {/* Title and Price */}
+      <div className="flex flex-col justify-between flex-grow mt-4">
+        <div>
+          <h2 className="text-sm font-semibold text-gray-800 line-clamp-2 mb-2">
+            {product.title}
+          </h2>
+          <p className="text-md font-bold text-gray-700 mb-4">
+            Rs. {product.price}
+          </p>
+        </div>
+
+        {/* Add to Cart Button */}
         <button
+          onClick={handleAdd}
+          className="flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition mt-auto"
           aria-label={`Add ${product.title} to cart`}
-          onClick={() => dispatch(addToCart(product))}
-          className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
-          Add to Cart
+          <IoCartOutline className="text-xl" />
+          {inCartCount > 0 ? `Add Another (${inCartCount})` : 'Add to Cart'}
         </button>
       </div>
     </div>
   );
-};
+}
 
 export default ProductItem;

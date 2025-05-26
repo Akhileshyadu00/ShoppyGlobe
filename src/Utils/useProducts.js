@@ -1,36 +1,26 @@
-import { useEffect, useState } from 'react';
+// Utils/useProducts.js
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProduct } from "./productSlice";
 
-const useProducts = () => {
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(true);
+export const useData = () => {
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.product.items);
+  const status = useSelector((state) => state.product.status);
 
-  // useEffect(() => {
-  //   fetch('https://fakestoreapi.in/api/products?limit=150')
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setProducts(data.products);
-  //       setLoading(false);
-  //     })
-  //     .catch(err => {
-  //       setError('Failed to fetch products');
-  //       setLoading(false);
-  //     });
-  // }, []);
+  const fetchData = () => {
+    if (status === "idle") {
+      dispatch(fetchProduct());
+    }
+  };
 
-  // useEffect( () => {
-  //   const fetchProduct = async() => {
-  //     const response = await fetch('fakestoreapi.in/api/products?limit=150');
-  //     const data = await response.json();
-  //     console.log((data));
-      
-  //   }
-  //   fetchProduct()
+  useEffect(() => {
+    fetchData();
+  }, [status, dispatch]);
 
-  // }, [])
+  const categoryOnlyData = [
+    ...new Set(data?.map((item) => item.category?.name || "Unknown")),
+  ];
 
-
-  return { products, error, loading };
+  return { data, fetchProduct: fetchData, status, categoryOnlyData };
 };
-
-export default useProducts;
