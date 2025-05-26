@@ -60,9 +60,10 @@ ShoppyGlobe is a responsive React-based e-commerce web application that allows u
     yarn install
 
 3. **Start the Deployment Server:**
-    npm start
+    npm run dev
     # or
-    yarn start
+    yarn run dev
+     
 
 ## Usage Details
 
