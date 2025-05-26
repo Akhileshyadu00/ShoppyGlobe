@@ -10,14 +10,14 @@ import {
 } from "../Utils/cartSlice";
 
 function Cart() {
-  const { items: cartItems, tempItems, totalPrice } = useSelector(s => s.cart);
+  const { items, tempItems, totalPrice } = useSelector(s => s.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // Save to localStorage on any change
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify({ cartItems, tempItems, totalPrice }));
-  }, [cartItems, tempItems, totalPrice]);
+    localStorage.setItem("cart", JSON.stringify({ items, tempItems, totalPrice }));
+  }, [items, tempItems, totalPrice]);
 
   // Single-item handlers
   const handleRemove = id => dispatch(removeFromCart(id));
@@ -28,7 +28,7 @@ function Cart() {
 
   // “Apply All” button
   const hasUnsaved = tempItems.some(t => {
-    const c = cartItems.find(i => i.id === t.id);
+    const c = items.find(i => i.id === t.id);
     return c && c.quantity !== t.quantity;
   });
   const applyAll = () => tempItems.forEach(t => dispatch(applyTempUpdate(t.id)));
@@ -37,7 +37,7 @@ function Cart() {
     <div className="p-6 max-w-5xl mx-auto">
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Your Cart</h1>
 
-      {cartItems.length === 0 ? (
+      {items.length === 0 ? (
         <div className="text-center mt-20">
           <h2 className="text-xl text-gray-500 mb-4">Your cart is empty.</h2>
           <button
@@ -51,7 +51,7 @@ function Cart() {
         <>
           <AnimatePresence>
             <div className="grid gap-6">
-              {cartItems.map(item => {
+              {items.map(item => {
                 const temp = tempItems.find(t => t.id === item.id);
                 const qty = temp ? temp.quantity : item.quantity;
 

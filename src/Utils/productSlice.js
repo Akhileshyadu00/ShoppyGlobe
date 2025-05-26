@@ -1,30 +1,42 @@
-import { createSlice ,createAsyncThunk} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
-export const fetchProduct = createAsyncThunk('products/fetchProduct', async() => {
-    const response = await axios.get('https://api.escuelajs.co/api/v1/products')
-    return response.data
-})
-
-const ProductSlice = createSlice ({
-    name: 'products',
-    initialState: {
-        items: [],
-        status: "idle"
-    },
-    extraReducers:(builder) => {
-        builder.addCase(fetchProduct.pending, (state) => {
-            state.status='Loading'
-        })
-        .addCase(fetchProduct.fulfilled, (state, action) => {
-            state.status='Fulfilled'
-            state.items= action.payload
-        })
-        .addCase(fetchProduct.rejected, (state) => {
-            state.status='Failed'
-        })
+// Async thunk for fetching products
+export const fetchProduct = createAsyncThunk(
+  'products/fetchProduct',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get('https://fakestoreapi.com/products');
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data || 'Something went wrong');
     }
-})
+  }
+);
 
-export default ProductSlice.reducer; 
+// Slice definition
+const productSlice = createSlice({
+  name: 'products',
+  initialState: {
+    items: [],
+    status: 'idle',   // 'idle' | 'loading' | 'fulfilled' | 'failed'
+    error: null,
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchProduct.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(fetchProduct.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.items = action.payload;
+      })
+      .addCase(fetchProduct.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      });
+  }
+});
+
+export default productSlice.reducer;

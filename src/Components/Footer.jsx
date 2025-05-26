@@ -3,7 +3,7 @@ import { Facebook, Instagram, Twitter, Mail } from 'lucide-react';
 
 function Footer() {
   return (
-    <footer className="bg-[#0f0c27] text-white py-10 px-4">
+    <footer className="bg-[#2f3030] text-white py-10 px-4">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
         {/* Brand Info */}
         <div>
@@ -17,10 +17,9 @@ function Footer() {
         <div>
           <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-2">
-            <li><a href="#" className="hover:text-red-400 transition">Home</a></li>
-            <li><a href="#" className="hover:text-red-400 transition">Shop</a></li>
-            <li><a href="#" className="hover:text-red-400 transition">About</a></li>
-            <li><a href="#" className="hover:text-red-400 transition">Contact</a></li>
+            <li><a href="/" className="hover:text-red-400 transition">Home</a></li>
+            <li><a href="/product" className="hover:text-red-400 transition">Shop</a></li>
+            
           </ul>
         </div>
 
@@ -28,9 +27,9 @@ function Footer() {
         <div>
           <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
           <div className="flex justify-center md:justify-start gap-4">
-            <a href="#" className="hover:text-red-400 transition"><Facebook /></a>
-            <a href="#" className="hover:text-red-400 transition"><Instagram /></a>
-            <a href="#" className="hover:text-red-400 transition"><Twitter /></a>
+            <a href="https://www.facebook.com/login/" className="hover:text-red-400 transition"><Facebook /></a>
+            <a href="https://www.instagram.com/accounts/login/" className="hover:text-red-400 transition"><Instagram /></a>
+            <a href="https://x.com/i/flow/login" className="hover:text-red-400 transition"><Twitter /></a>
             <a href="mailto:info@shoppyglobe.com" className="hover:text-red-400 transition"><Mail /></a>
           </div>
         </div>
