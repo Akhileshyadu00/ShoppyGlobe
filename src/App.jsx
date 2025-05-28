@@ -10,7 +10,7 @@ const Home = lazy(() => import('./Components/Home'));
 const ProductList = lazy(() => import('./Components/ProductList'));
 const ProductDetails = lazy(() => import('./Components/ProductDetails'));
 const Cart = lazy(() => import('./Components/Cart'));
-const NotFound = lazy(() => import('./Components/NotFound'));
+//const NotFound = lazy(() => import('./Components/NotFound'));
 
 function App() {
   return (
@@ -35,7 +35,7 @@ function App() {
               <Route path="/product" element={<ProductList />} />
               <Route path="/product/:id" element={<ProductDetails />} />
               <Route path="/cart" element={<Cart />} />
-              <Route path="*" element={<NotFound />} />
+           {/* <Route path="*" element={<NotFound />} /> */}
             </Routes>
           </main>
           <Footer />
